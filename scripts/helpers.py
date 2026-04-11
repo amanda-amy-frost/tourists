@@ -23,8 +23,12 @@ COUNTRY_CODES = sorted(
 
 # I chose to exclude anyone under 15, as the relevant traveling population is in
 # these two age ranges, and they likely exhibit different patterns between them.
+# The total population is still needed to compare against however, as only knowing
+# the working and retired populations doesn't account for the younger generations
+# that will replace the people who age out.
 WORKING = 'Y15T64' # 15 to 64 years old
 RETIRED = 'Y_GE65' # 65+ years old
+TOTAL = '_T' # Total population, including those under 15
 
 # It might be more efficient to first generate the necessary dataframes when
 # I need them, but for this project it makes sense to prioritize ease-of-use.
@@ -32,23 +36,24 @@ RETIRED = 'Y_GE65' # 65+ years old
 pop_by_country : dict[str, pl.DataFrame]= {}
 
 for code in COUNTRY_CODES:
-    # pl.over() allows us to group_by and left join the result in the same operation.
-    # If we didn't have two nearly identical columns in code and country, then the
-    # over() expression below would be a bit more intuitive, as the effect is summing
-    # over the code and year (i.e. by code and year). It's just that there is also a
-    # 1:1 mapping of code to country, which requires us to include the latter.
+    # Get a scalar of the total population, rather than a series
+    country_total_expr = pl.col('demo_total').filter(pl.col('demo') == TOTAL).first()
+    # Used for the percentage calculation below
+
+    # pl.over() allows us to group by and left join the result in the same operation.
+    # The call to pl.over() below expands (broadcasts) country_total_expr to fill the
+    # rows for that particular country code and year. E.g. AUT 1992 will have 3 identical
+    # entries for country_total, once each for the WORKING, RETIRED, and TOTAL demos.
     country = (
         pop.filter(pl.col('code') == code)
-            .with_columns(              # Add a new column
-                pl.col('demo_total')    # Based on demo_total
-                    .sum()              # Where you sum the rows by country/code and year
-                    .over(['code', 'country', 'year']) # Quirk of having two similar cols
-                    .alias('country_total'), # And name the new column
-            ).with_columns( # Need to define country_total first, hence another call
+            .with_columns(
+                country_total_expr
+                    .over(['code', 'year'])
+                    .alias('country_total')
+            ).with_columns( # Need a second call, as country_total must first exist
                 (pl.col('demo_total') / pl.col('country_total') * 100)
                     .round(2)
                     .alias('percentage')
-            )
-            .sort(pl.col('year'))   # Sort
+            ).sort(pl.col('year'))
     )
     pop_by_country[code] = country
