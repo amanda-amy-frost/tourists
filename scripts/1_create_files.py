@@ -3,18 +3,20 @@ import requests
 import json
 import csv
 
-RAW_POPULATION_COLS = ['REF_AREA', 'Reference area', 'AGE', 'TIME_PERIOD', 'OBS_VALUE']
-BETTER_POPULATION_COLS =  {'REF_AREA': 'code',
-                           'Reference area': 'country',
-                           'AGE': 'demo', # short for "demographic"
-                           'TIME_PERIOD': 'year',
-                           'OBS_VALUE': 'demo_total'}
+POPULATION_COLS = {
+    'REF_AREA': 'code',
+    'Reference area': 'country',
+    'AGE': 'demo', # Short for "demographic"
+    'TIME_PERIOD': 'year',
+    'OBS_VALUE': 'demo_total',
+}
 
-pop = pl.read_csv('../data/population-raw.csv',
-                  columns=RAW_POPULATION_COLS,
-                  schema_overrides={'OBS_VALUE': pl.Float64}, # Avoid parsing errors
-                  )
-pop = pop.rename(BETTER_POPULATION_COLS)
+pop = pl.read_csv(
+    source='../data/population-raw.csv',
+    columns=list(POPULATION_COLS.keys()),
+    schema_overrides={'OBS_VALUE': pl.Float64}, # Avoid parsing errors
+)
+pop = pop.rename(POPULATION_COLS)
 
 # In the rows for Portugal, the population numbers have a few non-whole number entries.
 # By default, Polars will try to infer a column's datatype based on the first 100 rows.
@@ -26,7 +28,10 @@ pop = pop.rename(BETTER_POPULATION_COLS)
 # The reason for doing this fix programmatically rather than manually editing the raw file
 # is to reduce the chance of errors due to the inherent unreliability and unrepeatability
 # of editing things in that way. It also wouldn't scale if the problem affected more rows.
-fixed_demo_count = pl.Series('demo_total', pop.select(pl.col('demo_total').cast(pl.Int64)))
+fixed_demo_count = pl.Series(
+    'demo_total',
+    pop.select(pl.col('demo_total').cast(pl.Int64)),
+)
 pop.replace_column(pop.get_column_index('demo_total'), fixed_demo_count)
 pop.write_csv('../data/population-processed.csv')
 
@@ -50,7 +55,13 @@ with open('../data/climate-data.csv', 'w', newline='\n') as f:
         climate_link = f'https://cckpapi.worldbank.org/api/v1/era5-x0.25_timeseries_hd30_timeseries_annual_1950-2023_mean_historical_era5_x0.25_mean/{code}?_format=json'
 
         json_data = json.loads(requests.get(climate_link).text)
-        extract = {year: hot_days for year, hot_days in json_data['data'][code].items() if year in YYYY_MM}
+        extract = {
+            year: hot_days for year, hot_days
+            in json_data['data'][code].items()
+            if year in YYYY_MM
+        }
         # Truncate the year back to just a YYYY format
-        extract_with_code = [(code, year[:4], hot_days) for year, hot_days in extract.items()]
+        extract_with_code = [
+            (code, year[:4], hot_days) for year, hot_days in extract.items()
+        ]
         w.writerows(extract_with_code)
