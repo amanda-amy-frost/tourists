@@ -12,7 +12,8 @@ BETTER_POPULATION_COLS =  {'REF_AREA': 'code',
 
 pop = pl.read_csv('../data/population-raw.csv',
                   columns=RAW_POPULATION_COLS,
-                  schema_overrides={'OBS_VALUE': pl.Float64}) # Avoid parsing errors
+                  schema_overrides={'OBS_VALUE': pl.Float64}, # Avoid parsing errors
+                  )
 pop = pop.rename(BETTER_POPULATION_COLS)
 
 # In the rows for Portugal, the population numbers have a few non-whole number entries.
