@@ -23,38 +23,47 @@ COUNTRY_CODES = sorted(
     .get_column('code')
     .to_list()
 )
-
 # I chose to exclude anyone under 15, as the relevant traveling population is in
 # these two age ranges, and they likely exhibit different patterns between them.
 # The total population is still needed to compare against however, as only knowing
 # the working and retired populations doesn't account for the younger generations
 # that will replace the people who age out.
-WORKING = 'Y15T64' # 15 to 64 years old
-RETIRED = 'Y_GE65' # 65+ years old
-TOTAL = '_T' # Total population, including those under 15
+WORKING = 'Y15T64'  # 15 to 64 years old
+RETIRED = 'Y_GE65'  # 65+ years old
+TOTAL = '_T'        # Total population, including those under 15
 
 # Use explicit type hint for code completion
-pop_by_country: dict[str, pl.DataFrame] = {}
+df_by_country: dict[str, pl.DataFrame] = {}
 
 for code in COUNTRY_CODES:
     # Get a scalar of the total population, rather than a series
-    country_total_expr = pl.col('demo_total').filter(pl.col('demo') == TOTAL).first()
-    # Used for the percentage calculation below
+    pop_total_expr = pl.col('demo_total').filter(pl.col('demo') == TOTAL).first()
 
     # pl.over() allows us to group by and left join the result in the same operation.
-    # The call to pl.over() below expands (broadcasts) country_total_expr to fill the
-    # rows for that particular country code and year. E.g. AUT 1992 will have 3 identical
+    # The call to pl.over() below expands (broadcasts) pop_total_expr to fill the rows
+    # for that particular country code and year. E.g. AUT 1992 will have 3 identical
     # entries for country_total, once each for the WORKING, RETIRED, and TOTAL demos.
-    country = (
+    pop_with_stats = (
         pop.filter(pl.col('code') == code)
             .with_columns(
-                country_total_expr
+                pop_total_expr
                     .over(['code', 'year'])
                     .alias('country_total')
             ).with_columns( # Need a second call, as country_total must first exist
                 (pl.col('demo_total') / pl.col('country_total') * 100)
                     .round(2)
-                    .alias('percentage')
+                    .alias('pop_percent')
             ).sort(pl.col('year'))
     )
-    pop_by_country[code] = country
+
+    full_df = (
+        tourists.filter(pl.col('code') == code)
+            .join(climate.filter(pl.col('code') == code), on=['code', 'year'], how='left')
+            .join(pop_with_stats, on=['code', 'year'], how='left', validate='1:m')
+    )
+    fixed_countries = pl.Series(
+        'country',
+        full_df.select(pl.col('country').fill_null(strategy='forward'))
+    )
+    full_df.replace_column(full_df.get_column_index('country'), fixed_countries)
+    df_by_country[code] = full_df
