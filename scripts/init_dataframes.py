@@ -13,6 +13,9 @@ tourists_pivoted = pl.read_csv('../data/tourists-processed.csv')
 # This operation is more intuitive if you start with a pivoted table,
 # as I originally did before realizing it was unnecessary.
 tourists = tourists_pivoted.unpivot(index='code', variable_name='year', value_name='visitors')
+# We need to force cast the year to an int after pivoting to allow for joins
+int_year = pl.Series('year', tourists.select(pl.col('year').cast(pl.Int64)))
+tourists.replace_column(tourists.get_column_index('year'), int_year)
 
 # Constants
 COUNTRY_CODES = sorted(
@@ -30,10 +33,8 @@ WORKING = 'Y15T64' # 15 to 64 years old
 RETIRED = 'Y_GE65' # 65+ years old
 TOTAL = '_T' # Total population, including those under 15
 
-# It might be more efficient to first generate the necessary dataframes when
-# I need them, but for this project it makes sense to prioritize ease-of-use.
-# Use explicit type hint for better code completion.
-pop_by_country : dict[str, pl.DataFrame]= {}
+# Use explicit type hint for code completion
+pop_by_country: dict[str, pl.DataFrame] = {}
 
 for code in COUNTRY_CODES:
     # Get a scalar of the total population, rather than a series
