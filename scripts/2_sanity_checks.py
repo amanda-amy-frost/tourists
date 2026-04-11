@@ -21,3 +21,14 @@ print(sorted(tourists.unique(subset='code').get_column('code')))
 print(pop.glimpse(return_type='string'))
 print(climate.glimpse(return_type='string'))
 print(tourists.glimpse(return_type='string'))
+
+# Check one of country's population aggregation dataframes
+print(pop_working['AUT'])
+print(pop_retired['AUT'])
+print(pop_total['AUT'])
+
+# Make sure we have all population years
+for code in COUNTRY_CODES:
+    assert list(range(1992, 2025)) == sorted(pop_working[code].get_column('year').to_list())
+    assert list(range(1992, 2025)) == sorted(pop_retired[code].get_column('year').to_list())
+    assert list(range(1992, 2025)) == sorted(pop_total[code].get_column('year').to_list())

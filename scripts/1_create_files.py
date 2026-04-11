@@ -34,7 +34,8 @@ pop.write_csv('../data/population-processed.csv')
 COUNTRY_CODES = sorted(
     pop.unique(subset='code')
     .get_column('code')
-    .to_list())
+    .to_list()
+)
 
 # The dataset ends in 2023
 # The year consistently uses July ('-07') as its reference point throughout
