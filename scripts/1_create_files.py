@@ -8,13 +8,13 @@ POPULATION_COLS = {
     'Reference area': 'country',
     'AGE': 'demo', # Short for "demographic"
     'TIME_PERIOD': 'year',
-    'OBS_VALUE': 'demo_total',
+    'OBS_VALUE': 'demo_total'
 }
 
 pop = pl.read_csv(
     source='../data/population-raw.csv',
     columns=list(POPULATION_COLS.keys()),
-    schema_overrides={'OBS_VALUE': pl.Float64}, # Avoid parsing errors
+    schema_overrides={'OBS_VALUE': pl.Float64} # Avoid parsing errors
 )
 pop = pop.rename(POPULATION_COLS)
 
@@ -30,17 +30,13 @@ pop = pop.rename(POPULATION_COLS)
 # of editing things in that way. It also wouldn't scale if the problem affected more rows.
 fixed_demo_count = pl.Series(
     'demo_total',
-    pop.select(pl.col('demo_total').cast(pl.Int64)),
+    pop.select(pl.col('demo_total').cast(pl.Int64))
 )
 pop.replace_column(pop.get_column_index('demo_total'), fixed_demo_count)
 pop.write_csv('../data/population-processed.csv')
 
 # I used these codes to manually edit tourists-processed.csv
-COUNTRY_CODES = sorted(
-    pop.unique(subset='code')
-    .get_column('code')
-    .to_list()
-)
+COUNTRY_CODES = sorted(pop.unique(subset='code').get_column('code').to_list())
 
 # The dataset ends in 2023
 # The year consistently uses July ('-07') as its reference point throughout
