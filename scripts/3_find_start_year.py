@@ -2,9 +2,9 @@ import polars as pl
 from init_dataframes import *
 
 # Define a metric for determining the starting year for our analysis, as there are
-# a lot of very low outliers in the first several years of visitors from multiple
+# a lot of very low outliers in the first several years of visits from multiple
 # countries. One quick way for this is finding the earliest year where the minimum
-# number of visitors is at least equal to some multiple of the STD below the mean,
+# number of visits is at least equal to some multiple of the STD below the mean,
 # as the data can be quite variable due to the initial outliers. We don't need to
 # worry about accidentally removing the COVID years, as this filter is only used
 # to calculate the starting year. A couple countries (e.g. Iceland and Portugal)
@@ -17,7 +17,7 @@ while not stable:
     print('start_year', start_year)
     print('count', count)
     for code in COUNTRY_CODES:
-        visitors = pl.col('visitors')
+        visits = pl.col('visits')
         # Polars makes it very efficient to perform queries like this,
         # as it uses lazy execution under the hood and can plan ahead
         # for operations by taking advantage of predicate and projection
@@ -41,7 +41,7 @@ while not stable:
             # start_year, as the last outliers from 2004 - Iceland and
             # Portugal - both jump by an order of magnitude from 2004
             # to 2005, and after that the changes are smoother.
-            visitors >= (visitors.mean() - (visitors.std(ddof=0) * 1.2))
+            visits >= (visits.mean() - (visits.std(ddof=0) * 1.2))
         ).select(
             pl.min('year')
         ).item()

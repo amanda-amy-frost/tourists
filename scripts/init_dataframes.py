@@ -13,7 +13,7 @@ tourists_pivoted = pl.read_csv('../data/tourists-processed.csv')
 # This operation is more intuitive if you start with a pivoted table,
 # as I originally did before realizing it was unnecessary.
 tourists = tourists_pivoted.unpivot(
-    index='code', variable_name='year', value_name='visitors'
+    index='code', variable_name='year', value_name='visits'
 )
 # We need to force cast the year to an int after pivoting to allow for joins later on.
 # It got interpreted as a string due to occuring on the same row as "code" in the .csv.
@@ -59,7 +59,7 @@ COLUMN_ORDER = [
     'year',
     'country',
     'hot_days',
-    'visitors',
+    'visits',
     'demo',
     'demo_total',
     'country_total',

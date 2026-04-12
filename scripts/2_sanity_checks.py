@@ -52,7 +52,7 @@ for code in ['ISL', 'PRT']:
     stats = (
         df_by_country[code]
             .filter(pl.col('year') >= START_YEAR)
-            .select(pl.col('visitors'))
+            .select(pl.col('visits'))
             .describe()
     )
     print(stats)
