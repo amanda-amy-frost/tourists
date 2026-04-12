@@ -1,7 +1,11 @@
 import polars as pl
 from init_dataframes import *
 
-# Quick and dirty ways to check that everything looks as it should
+# Quick and dirty ways to check that everything looks as it should.
+# More properly, these would be unit-like tests, but prints and
+# asserts are sufficient enough for these small-scale, fast-paced
+# iterative cycles of building up the code without running into
+# regressions.
 
 # Show the dataframes themselves
 print('pop')
@@ -41,3 +45,14 @@ for code in COUNTRY_CODES:
 # Check one of the country's dataframes
 with pl.Config(tbl_rows=100, tbl_cols=9):
     print(df_by_country['AUT'])
+
+# Check the stats of the two biggest troublemakers with the new start_year
+for code in ['ISL', 'PRT']:
+    print(code)
+    stats = (
+        df_by_country[code]
+            .filter(pl.col('year') >= START_YEAR)
+            .select(pl.col('visitors'))
+            .describe()
+    )
+    print(stats)

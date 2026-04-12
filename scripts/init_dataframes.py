@@ -1,6 +1,6 @@
 import polars as pl
 
-# Use this file for prototyping in iPython and for the individual scripts themsevles
+# Use this file for prototyping in iPython and for the individual scripts themselves
 
 # Allow Polars to infer all datatypes
 # While you could get fancy and specify a schema with fx enums or force the years
@@ -12,7 +12,9 @@ tourists_pivoted = pl.read_csv('../data/tourists-processed.csv')
 # "Unpivot" the dataframe so that year repeats for each country code.
 # This operation is more intuitive if you start with a pivoted table,
 # as I originally did before realizing it was unnecessary.
-tourists = tourists_pivoted.unpivot(index='code', variable_name='year', value_name='visitors')
+tourists = tourists_pivoted.unpivot(
+    index='code', variable_name='year', value_name='visitors'
+)
 # We need to force cast the year to an int after pivoting to allow for joins later on.
 # It got interpreted as a string due to occuring on the same row as "code" in the .csv.
 _int_year = pl.Series('year', tourists.select(pl.col('year').cast(pl.Int64)))
@@ -34,8 +36,30 @@ WORKING = 'Y15T64'  # 15 to 64 years old
 RETIRED = 'Y_GE65'  # 65+ years old
 TOTAL   = '_T'      # Total population, including those under 15
 
+# From find start year script
+START_YEAR = 2005
+
+# While it would be more efficient (both performance
+# and memory-wise) to filter these dataframes already
+# here, I am choosing to take the less efficient route
+# and add some duplication so that all current scripts
+# can still run as-is. In particular, the find start year
+# script should still run on df_by_country.
+#
+# _year_expr = pl.col('year') >= START_YEAR
+# pop, climate, tourists = (
+#     pop.filter(_year_expr),
+#     climate.filter(_year_expr),
+#     tourists.filter(_year_expr)
+# )
+
 # Use explicit type hint for code completion
 df_by_country: dict[str, pl.DataFrame] = {}
+
+# TODO: better name?
+# This dataframe holds the starting
+# data for all further data analysis
+monster_df: dict[str, pl.DataFrame] = {}
 
 for code in COUNTRY_CODES:
     # Get a scalar of the total population, rather than a series (.first())
@@ -48,7 +72,7 @@ for code in COUNTRY_CODES:
     _pop_with_stats = (
         pop.filter(pl.col('code') == code)
             .with_columns(
-                _pop_total_expr              # Grab the TOTAL population (scalar) for
+                _pop_total_expr             # Grab the TOTAL population (scalar) for
                     .over(['code', 'year']) # that code+year combo, and fill the rows
                     .alias('country_total') # of country_total for the same code+year
             ).with_columns( # Need a second call, as country_total must first exist
@@ -59,10 +83,10 @@ for code in COUNTRY_CODES:
     )
 
     # Start with the tourists df, as it has all years (1992-2025). Grab the same country's
-    # rows from climate, and do a join that resembles the .over() above for pop_with_stats.
-    # The difference here is that there is a 1:1 correspondence between tourists and climate.
-    # The latter is missing data for 2024 and 2025, so there will be some null values there.
-    # The join with pop_with_stats however has multiple rows for each code+year, hence 1:m.
+    # rows from climate, and do a join that resembles the .over() above. The difference
+    # here is that there is a 1:1 correspondence between tourists and climate. The latter
+    # is missing data for 2024 and 2025, so there will be some null values there. The
+    # join with pop_with_stats however has multiple rows for each code+year, hence 1:m.
     # Joining on those two columns will automatically broadcast the appropriate rows.
     _tour = tourists.filter(pl.col('code') == code)
     _clim = climate.filter(pl.col('code') == code)
@@ -77,4 +101,7 @@ for code in COUNTRY_CODES:
         _full_df.select(pl.col('country').fill_null(strategy='forward'))
     )
     _full_df.replace_column(_full_df.get_column_index('country'), _fixed_countries)
+
+    # I am willfully choosing the duplication here for the reasons described above
     df_by_country[code] = _full_df
+    monster_df[code] = _full_df.filter(pl.col('year') >= START_YEAR)
