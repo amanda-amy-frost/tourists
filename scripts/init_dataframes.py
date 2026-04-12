@@ -53,6 +53,19 @@ START_YEAR = 2005
 #     tourists.filter(_year_expr)
 # )
 
+# The canon column order
+COLUMN_ORDER = [
+    'code',
+    'year',
+    'country',
+    'hot_days',
+    'visitors',
+    'demo',
+    'demo_total',
+    'country_total',
+    'pop_percent'
+]
+
 # Use explicit type hint for code completion
 df_by_country: dict[str, pl.DataFrame] = {}
 
@@ -101,6 +114,7 @@ for code in COUNTRY_CODES:
         _full_df.select(pl.col('country').fill_null(strategy='forward'))
     )
     _full_df.replace_column(_full_df.get_column_index('country'), _fixed_countries)
+    _full_df = _full_df.select(COLUMN_ORDER)
 
     # I am willfully choosing the duplication here for the reasons described above
     df_by_country[code] = _full_df
