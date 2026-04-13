@@ -1,15 +1,13 @@
-# Tourist data mini-project
+# Tourist data mini-project (2026)
 
-- [Tourist data mini-project](#tourist-data-mini-project)
-  - [TLDR (Too Long, Didn't Read)](#tldr-too-long-didnt-read)
-  - [Introduction](#introduction)
-  - [Choice of dataframe library](#choice-of-dataframe-library)
-  - [Development process](#development-process)
-  - [Interesting questions](#interesting-questions)
-  - [Scope and granularity of data](#scope-and-granularity-of-data)
-  - [Data sources](#data-sources)
-  - [Misc notes](#misc-notes)
-
+- [TLDR (Too Long, Didn't Read)](#tldr-too-long-didnt-read)
+- [Introduction](#introduction)
+- [Choice of dataframe library](#choice-of-dataframe-library)
+- [Development process](#development-process)
+- [Interesting questions](#interesting-questions)
+- [Scope and granularity of data](#scope-and-granularity-of-data)
+- [Data sources](#data-sources)
+- [Misc notes](#misc-notes)
 
 ## TLDR (Too Long, Didn't Read)
 
@@ -36,9 +34,9 @@ The goal of this project is to use open source data to perform some introductory
 
 I was originally going to do this project with the classic pandas + matplotlib combo, but there have been some interesting developments over the last several years in the dataframe and data visualization space. Pandas' API can be cumbersome and unintuitive, and libraries that accomplish similar goals have exploded in popularity recently, and for good reason.
 
-Among them is Polars (https://docs.pola.rs/). It seems to be popular, standarized, and mature and feature complete enough to be a full replacement, and I found it extremely easy to start working with. So, I decided to instead learn enough of Polars to make this mini-project. The docs are excellent after all. And while the performance benefits are irrelevant for this project, this seems to be an all-round improvement on pandas by every possible measure, but especially the API.
+Among them is [Polars](https://docs.pola.rs/). It seems to be popular, standarized, and mature and feature complete enough to be a full replacement, and I found it extremely easy to start working with. So, I decided to instead learn enough of Polars to make this mini-project. The docs are excellent after all. And while the performance benefits are irrelevant for this project, this seems to be an all-round improvement on pandas by every possible measure, but especially the API.
 
-Polars also has native support for Altair (https://altair-viz.github.io/index.html), so I used that library to render charts and plots.
+Polars also has native support for [Altair](https://altair-viz.github.io/index.html), so I used that library to render charts and plots.
 
 ## Development process
 
@@ -64,16 +62,10 @@ The tourist data is complete through 2025, the population data through 2024, and
 
 ## Data sources
 
-Tourist visits:
-https://www.statistikbanken.dk/TURIST
-
-Climate data:
-https://climateknowledgeportal.worldbank.org/download-data
-
-Country populations:
-https://data-explorer.oecd.org/vis?lc=en&df[ds]=DisseminateFinalDMZ&df[id]=DSD_POPULATION%40DF_POP_HIST&df[ag]=OECD.ELS.SAE&df[vs]=1.0&dq=FIN%2BISL%2BITA%2BNOR%2BPRT%2BSWE%2BAUT%2BFRA%2BDEU%2BIRL%2BNLD%2BESP%2BCHE%2BGBR%2BUSA%2BCAN%2BBEL..PS._T._T%2BY15T64%2BY_GE65.&pd=1992%2C2024&to[TIME_PERIOD]=false&vw=tb
-
-The URL parameters for the country populations encode the exact settings for the table I generated and saved as a raw .csv.
+- [Tourist visits](https://www.statistikbanken.dk/TURIST)
+- [Climate data](https://climateknowledgeportal.worldbank.org/download-data)
+  - [Sample API call for Spain](https://cckpapi.worldbank.org/api/v1/era5-x0.25_timeseries_hd30_timeseries_annual_1950-2023_mean_historical_era5_x0.25_mean/ESP?_format=json)
+- [Country populations (link goes to exact configuration)](https://data-explorer.oecd.org/vis?lc=en&df[ds]=DisseminateFinalDMZ&df[id]=DSD_POPULATION%40DF_POP_HIST&df[ag]=OECD.ELS.SAE&df[vs]=1.0&dq=FIN%2BISL%2BITA%2BNOR%2BPRT%2BSWE%2BAUT%2BFRA%2BDEU%2BIRL%2BNLD%2BESP%2BCHE%2BGBR%2BUSA%2BCAN%2BBEL..PS._T._T%2BY15T64%2BY_GE65.&pd=1992%2C2024&to[TIME_PERIOD]=false&vw=tb)
 
 ## Misc notes
 
