@@ -1,16 +1,50 @@
 # Tourist data mini-project
 
-TODO: Add an introduction
+- [Tourist data mini-project](#tourist-data-mini-project)
+  - [TLDR (Too Long, Didn't Read)](#tldr-too-long-didnt-read)
+  - [Introduction](#introduction)
+  - [Choice of dataframe library](#choice-of-dataframe-library)
+  - [Development process](#development-process)
+  - [Interesting questions](#interesting-questions)
+  - [Scope and granularity of data](#scope-and-granularity-of-data)
+  - [Data sources](#data-sources)
+  - [Misc notes](#misc-notes)
+
+
+## TLDR (Too Long, Didn't Read)
+
+This project uses a few publicly available data sources, based primarily around overnight stays in Denmark from various Global North countries, to perform some data analysis on interesting questions that arise from combining those sources.
+
+The main product of this project is a Jupyter notebook that tells the full story, from data extraction, to transformation, to charts and statistics. The scripts, data, and other useful artifacts that were used to build this project can be found in their respective folders.
+
+- Key questions
+- Main conclusions
+- A few charts
+
+## Introduction
+
+The goal of this project is to use open source data to perform some introductory analysis on various questions related to tourist visits - specifically overnight stays - in Denmark. That data forms the foundation that everything else is based around. Along with an extract of that data, I
+
+- Executive summary
+- Basic ideas
+- Hypotheses and testing
+- Analysis and charts
+- Conclusions
+- Open questions
 
 ## Choice of dataframe library
 
-I was originally going to do this project with the classic pandas + matplotlib combo, but after remembering how unintuitive and cumbersome it can be to use pandas, I found out there's a new kid on the block: polars (https://docs.pola.rs/). It seems to be popular, standarized, and mature and feature complete enough to be a full replacement, and I found it extremely easy to start working with. So, I decided to instead learn enough of polars to make this mini-project. The docs are excellent after all. And while the performance benefits are irrelevant for this project, this seems to be an all-round improvement on pandas by every possible measure, but especially the API.
+I was originally going to do this project with the classic pandas + matplotlib combo, but there have been some interesting developments over the last several years in the dataframe and data visualization space. Pandas' API can be cumbersome and unintuitive, and libraries that accomplish similar goals have exploded in popularity recently, and for good reason.
+
+Among them is Polars (https://docs.pola.rs/). It seems to be popular, standarized, and mature and feature complete enough to be a full replacement, and I found it extremely easy to start working with. So, I decided to instead learn enough of Polars to make this mini-project. The docs are excellent after all. And while the performance benefits are irrelevant for this project, this seems to be an all-round improvement on pandas by every possible measure, but especially the API.
+
+Polars also has native support for Altair (https://altair-viz.github.io/index.html), so I used that library to render charts and plots.
 
 ## Development process
 
 - Prototype everything in iPython, one step at a time.
 - Once I have enough to acheive a particular goal, refactor and add the code to a script. Repeat for the next goal.
-- At the end, create a Jupyter notebook with the most important code and results, interspersed with text blocks that describe my thought process. Render that to an HTML file as the final main product.
+- At the end, create a Jupyter notebook with the most important code and results, interspersed with text blocks that explain my thought process. Render that to an HTML file as the final main artifact.
 
 ## Interesting questions
 
