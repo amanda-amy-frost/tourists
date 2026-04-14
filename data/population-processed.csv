@@ -1,4 +1,4 @@
-code,country,demo,year,demo_total
+iso_code,country,demo,year,demo_total
 AUT,Austria,_T,1992,7840709
 AUT,Austria,_T,1993,7905632
 AUT,Austria,_T,1994,7936118

@@ -9,22 +9,20 @@ pop = pl.read_csv('../data/population-processed.csv')
 climate = pl.read_csv('../data/climate-data.csv')
 tourists_pivoted = pl.read_csv('../data/tourists-processed.csv')
 
-# "Unpivot" the dataframe so that year repeats for each country code.
+# "Unpivot" the dataframe so that year repeats for each iso_code.
 # This operation is more intuitive if you start with a pivoted table,
 # as I originally did before realizing it was unnecessary.
 tourists = tourists_pivoted.unpivot(
-    index='code', variable_name='year', value_name='visits'
+    index='iso_code', variable_name='year', value_name='visits'
 )
 # We need to force cast the year to an int after pivoting to allow for joins later on.
-# It got interpreted as a string due to occuring on the same row as "code" in the .csv.
+# It got interpreted as a string due to occuring on the same row as 'iso_code' in the csv.
 _int_year = pl.Series('year', tourists.select(pl.col('year').cast(pl.Int64)))
 tourists.replace_column(tourists.get_column_index('year'), _int_year)
 
 # Constants
-COUNTRY_CODES = sorted(
-    pop.unique(subset='code')
-    .get_column('code')
-    .to_list()
+COUNTRY_ISO_CODES = sorted(
+    pop.unique(subset='iso_code').get_column('iso_code').to_list()
 )
 
 # I chose to exclude anyone under 15, as the relevant traveling population is in
@@ -55,7 +53,7 @@ START_YEAR = 2005
 
 # The canon column order
 COLUMN_ORDER = [
-    'code',
+    'iso_code',
     'year',
     'country',
     'hot_days',
@@ -74,20 +72,20 @@ df_by_country: dict[str, pl.DataFrame] = {}
 # data for all further data analysis
 monster_df: dict[str, pl.DataFrame] = {}
 
-for code in COUNTRY_CODES:
+for iso_code in COUNTRY_ISO_CODES:
     # Get a scalar of the total population, rather than a series (.first())
     _pop_total_expr = pl.col('demo_total').filter(pl.col('demo') == TOTAL).first()
 
     # .over() allows us to group_by and left join the result in the same operation.
     # The call to .over() below expands (broadcasts) pop_total_expr to fill the rows
-    # for that particular country code and year. E.g. AUT 1992 will have 3 identical
+    # for that particular iso_code and year. E.g. AUT 1992 will have 3 identical
     # entries for country_total, once each for the WORKING, RETIRED, and TOTAL demos.
     _pop_with_stats = (
-        pop.filter(pl.col('code') == code)
+        pop.filter(pl.col('iso_code') == iso_code)
             .with_columns(
-                _pop_total_expr             # Grab the TOTAL population (scalar) for
-                    .over(['code', 'year']) # that code+year combo, and fill the rows
-                    .alias('country_total') # of country_total for the same code+year
+                _pop_total_expr                 # Grab the TOTAL population (scalar) for
+                    .over(['iso_code', 'year']) # that code+year combo, and fill the rows
+                    .alias('country_total')     # of country_total for the same code+year
             ).with_columns( # Need a second call, as country_total must first exist
                 (pl.col('demo_total') / pl.col('country_total') * 100)
                     .round(2)
@@ -101,11 +99,11 @@ for code in COUNTRY_CODES:
     # is missing data for 2024 and 2025, so there will be some null values there. The
     # join with pop_with_stats however has multiple rows for each code+year, hence 1:m.
     # Joining on those two columns will automatically broadcast the appropriate rows.
-    _tour = tourists.filter(pl.col('code') == code)
-    _clim = climate.filter(pl.col('code') == code)
+    _tour = tourists.filter(pl.col('iso_code') == iso_code)
+    _clim = climate.filter(pl.col('iso_code') == iso_code)
     _full_df = (
-        _tour.join(_clim, on=['code', 'year'], how='left', validate='1:1')
-            .join(_pop_with_stats, on=['code', 'year'], how='left', validate='1:m')
+        _tour.join(_clim, on=['iso_code', 'year'], how='left', validate='1:1')
+            .join(_pop_with_stats, on=['iso_code', 'year'], how='left', validate='1:m')
     )
     # The one null value we want to fill is the missing 'country' for 2025.
     # The other null values should stay null for now.
@@ -117,5 +115,5 @@ for code in COUNTRY_CODES:
     _full_df = _full_df.select(COLUMN_ORDER)
 
     # I am willfully choosing the duplication here for the reasons described above
-    df_by_country[code] = _full_df
-    monster_df[code] = _full_df.filter(pl.col('year') >= START_YEAR)
+    df_by_country[iso_code] = _full_df
+    monster_df[iso_code] = _full_df.filter(pl.col('year') >= START_YEAR)

@@ -16,7 +16,7 @@ while not stable:
     stable = True # Assume stable until proven otherwise
     print('start_year', start_year)
     print('count', count)
-    for code in COUNTRY_CODES:
+    for iso_code in COUNTRY_ISO_CODES:
         visits = pl.col('visits')
         # Polars makes it very efficient to perform queries like this,
         # as it uses lazy execution under the hood and can plan ahead
@@ -28,12 +28,11 @@ while not stable:
         # df_by_country every loop and sacrifice memory for more performance
         # in future iterations, you can naively repeat the same operations
         # on the full dataframe, at least in this case.
-        year = df_by_country[code].filter(
+        year = df_by_country[iso_code].filter(
             # First filter out the years, as applying both filters
             # concurrently defeats the purpose of the second one.
             pl.col('year') >= start_year
         ).filter(
-            # Use the population standard deviation as the baseline.
             # 1.2 is a "magic number" - I picked it more so that the
             # start_year would end somewhere reasonable, but a more
             # systematic and reasoned approach would likely be needed
@@ -41,7 +40,7 @@ while not stable:
             # start_year, as the last outliers from 2004 - Iceland and
             # Portugal - both jump by an order of magnitude from 2004
             # to 2005, and after that the changes are smoother.
-            visits >= (visits.mean() - (visits.std(ddof=0) * 1.2))
+            visits >= (visits.mean() - (visits.std() * 1.2))
         ).select(
             pl.min('year')
         ).item()
@@ -49,6 +48,6 @@ while not stable:
             start_year = year
             stable = False
             count += 1
-            print(code)
+            print(iso_code)
             print(year)
             print('count:', count)
