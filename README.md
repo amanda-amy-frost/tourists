@@ -28,19 +28,19 @@ This project is an introductory exploration of a [tourist database](https://www.
 
 ### Current progress
 
-- [x] Selection of relevant data
-- [x] Data extraction
-- [x] Processing of initial data
-- [x] Data normalization
-- [x] Initial visualization
-- [x] Initial commentary
-- [x] Formulation of research questions
-- [ ] Selection of statistical tools and methods
-- [ ] Statistical analysis
-- [ ] Final chart generation
-- [ ] (Optional) Power BI dashboard
-- [ ] Analysis write-up
-- [ ] Conclusion write-up
+- :ballot_box_with_check: Selection of relevant data
+- :ballot_box_with_check: Data extraction
+- :ballot_box_with_check: Processing of initial data
+- :ballot_box_with_check: Data normalization
+- :ballot_box_with_check: Initial visualization
+- :ballot_box_with_check: Initial commentary
+- :ballot_box_with_check: Formulation of research questions
+- :ballot_box: Selection of statistical tools and methods
+- :ballot_box: Statistical analysis
+- :ballot_box: Final chart generation
+- :ballot_box: (Optional) Power BI dashboard
+- :ballot_box: Analysis write-up
+- :ballot_box: Conclusion write-up
 
 <details>
 
