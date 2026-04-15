@@ -3,20 +3,21 @@ import requests
 import json
 import csv
 
-POPULATION_COLS = {
-    'REF_AREA': 'iso_code',         # Three letter ISO code for a country
-    'Reference area': 'country',
-    'AGE': 'demo',                  # Short for "demographic"
-    'TIME_PERIOD': 'year',
-    'OBS_VALUE': 'demo_total'
-}
+# List of tuples to more easily fit with what pl.read_csv() expects
+POPULATION_COLS = [
+    ('REF_AREA', 'iso_code'),       # Three letter ISO code for a country
+    ('Reference area', 'country'),
+    ('AGE', 'demo'),                # Short for "demographic"
+    ('TIME_PERIOD', 'year'),
+    ('OBS_VALUE', 'demo_total')
+]
 
 pop = pl.read_csv(
     source='../data/population-raw.csv',
-    columns=list(POPULATION_COLS.keys()),
+    columns=[col[0] for col in POPULATION_COLS],
+    new_columns=[col[1] for col in POPULATION_COLS],
     schema_overrides={'OBS_VALUE': pl.Float64} # Avoid parsing errors
 )
-pop = pop.rename(POPULATION_COLS)
 
 # In the rows for Portugal, the population numbers have a few non-whole number entries.
 # By default, Polars will try to infer a column's datatype based on the first 100 rows.
