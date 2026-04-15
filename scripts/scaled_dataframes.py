@@ -14,7 +14,7 @@ REGIONS = {
     'west_eu': WEST_EU,
     'nordics': NORDICS,
     'south_eu': SOUTH_EU,
-    'nor_amer': NOR_AMER
+    'nor_amer': NOR_AMER,
 }
 
 # We only need this list to concat all the dataframes together,

@@ -61,7 +61,7 @@ COLUMN_ORDER = [
     'demo',
     'demo_total',
     'country_total',
-    'pop_percent'
+    'pop_percent',
 ]
 
 # Use explicit type hint for code completion

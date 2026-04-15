@@ -9,14 +9,14 @@ POPULATION_COLS = [
     ('Reference area', 'country'),
     ('AGE', 'demo'),                # Short for "demographic"
     ('TIME_PERIOD', 'year'),
-    ('OBS_VALUE', 'demo_total')
+    ('OBS_VALUE', 'demo_total'),
 ]
 
 pop = pl.read_csv(
     source='../data/population-raw.csv',
     columns=[col[0] for col in POPULATION_COLS],
     new_columns=[col[1] for col in POPULATION_COLS],
-    schema_overrides={'OBS_VALUE': pl.Float64} # Avoid parsing errors
+    schema_overrides={'OBS_VALUE': pl.Float64}, # Avoid parsing errors
 )
 
 # In the rows for Portugal, the population numbers have a few non-whole number entries.
