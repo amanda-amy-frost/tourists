@@ -1,6 +1,6 @@
 # Tourist data mini-project (2026)
 
-- [TLDR (Too Long, Didn't Read)](#tldr-too-long-didnt-read)
+- [Executive summary](#executive-summary)
 - [Introduction](#introduction)
 - [Choice of dataframe library](#choice-of-dataframe-library)
 - [Development process](#development-process)
@@ -9,7 +9,7 @@
 - [Data sources](#data-sources)
 - [Misc notes](#misc-notes)
 
-## TLDR (Too Long, Didn't Read)
+## Executive summary
 
 This project uses a few publicly available data sources, based primarily around overnight stays in Denmark from various Global North countries, to perform some data analysis on interesting questions that arise from combining those sources.
 
@@ -61,6 +61,8 @@ As this is meant to be a small project, the data for all sources is very coarse-
 The tourist data is complete through 2025, the population data through 2024, and the climate data through 2023. All extracted data goes as far back as 1992, as that is the earliest available year for the tourist dataset.
 
 ## Data sources
+
+See the images folder for screenshots of how the data was selected from each source.
 
 - [Tourist visits](https://www.statistikbanken.dk/TURIST)
 - [Climate data](https://climateknowledgeportal.worldbank.org/download-data)
