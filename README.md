@@ -15,8 +15,12 @@
   - [Choice of dataframe library](#choice-of-dataframe-library)
   - [Development process](#development-process)
   - [Statistics packages to consider](#statistics-packages-to-consider)
+  - [Local prerequisites](#local-prerequisites)
+  - [Development environment](#development-environment)
+  - [Interesting tools for the future](#interesting-tools-for-the-future)
 - [Scope and granularity of data](#scope-and-granularity-of-data)
 - [Data sources](#data-sources)
+
 
 ## Executive summary
 
@@ -34,7 +38,10 @@ This project is an introductory exploration of a [tourist database](https://www.
 - :ballot_box_with_check: Data normalization
 - :ballot_box_with_check: Initial visualization
 - :ballot_box_with_check: Initial commentary
+- :ballot_box_with_check: Technical documentation
 - :ballot_box_with_check: Formulation of research questions
+- :ballot_box: (Optional) Marimo toy example
+- :ballot_box: (Optional) Notebook to PDF workflow
 - :ballot_box: Selection of statistical tools and methods
 - :ballot_box: Statistical analysis
 - :ballot_box: Final chart generation
@@ -103,9 +110,11 @@ Among them is [Polars](https://docs.pola.rs/). It seems to be popular, standariz
 
 Polars also has native support for [Altair](https://altair-viz.github.io/index.html), so I used that library to render charts and plots.
 
+TODO: Multiple ways of compatibility between Polars and pandas: functions, Narwhals
+
 ### Development process
 
-- Prototype everything in iPython, one step at a time.
+- Prototype everything in [iPython](https://ipython.org/features/), one step at a time.
 - Once I have enough to acheive a particular goal, refactor and add the code to a script. Repeat for the next goal.
 - At the end, create a Jupyter notebook with the most important code and results, interspersed with text blocks that explain my thought process. Render that to a PDF as the final main artifact.
 
@@ -120,6 +129,36 @@ I haven't yet needed to use these libraries so far, but for statistical analysis
   - [statistics](https://numpy.org/doc/stable/reference/routines.statistics.html)
 - [scikit-learn](https://scikit-learn.org/stable/)
   - [regressions](https://scikit-learn.org/stable/supervised_learning.html)
+
+### Local prerequisites
+
+- Jupyter notebook
+- LaTex? rendering
+- Polars
+- Altair
+- Anything else?
+- Relative file path issues?
+
+### Development environment
+
+- Potential issues with file references (images)
+- Windows
+- VS code
+  - extensions?
+- Git
+- python packages and versions (and python version)
+
+### Interesting tools for the future
+
+Although outside the scope of this project and a secondary consideration...
+
+- GitHub pages
+- Marimo
+- Narwhals
+- DuckDB
+- uv
+- Prefect
+- WSL
 
 ## Scope and granularity of data
 
