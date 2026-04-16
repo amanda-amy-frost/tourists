@@ -21,9 +21,11 @@ jobs:
       - name: Convert notebooks
         uses: amanda-amy-frost/jupyter-to-pdf-action@v1
         with:
+          dry_run: ${{ env.DRY_RUN }}
           input_dirs: "scripts"
           output_dir: "."
-          dry_run: ${{ env.DRY_RUN }}
+          execute: "true"
+          requirements: "requirements.txt"
 
       - name: Commit PDF back to repo
         if: ${{ env.DRY_RUN == 'false' }}
