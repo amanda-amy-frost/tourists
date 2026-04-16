@@ -35,7 +35,6 @@ jobs:
           echo "Searching for PDFs recursively..."
           find "$GITHUB_WORKSPACE" -type f -name "*.pdf" -print0 |
             xargs -0 git add
-          git add **/*.pdf
           git commit -m "Update analysis notebook PDF" ||
             echo "No changes to commit"
           git push
