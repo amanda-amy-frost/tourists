@@ -1,4 +1,6 @@
 name: Convert notebook to PDF
+permissions:
+  contents: write
 
 on:
   push:
