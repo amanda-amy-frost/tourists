@@ -26,7 +26,7 @@ jobs:
         run: |
           git config user.name "Amanda Frost"
           git config user.email "amanda.amy.frost@gmail.com"
-          git add *.pdf
+          git add **/*.pdf
           git commit -m "Update analysis notebook PDF" ||
             echo "No changes to commit"
           git push
