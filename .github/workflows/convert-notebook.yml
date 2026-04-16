@@ -1,0 +1,32 @@
+name: Convert notebook to PDF
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/*.ipynb"
+  workflow_dispatch:
+
+jobs:
+  convert-and-commit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Convert notebooks
+        uses: amanda-amy-frost/jupyter-to-pdf-action@v1
+        with:
+          input_dirs: "scripts"
+          output_dir: "."
+          dry_run: "true"
+
+      - name: Commit PDF back to repo
+        run: |
+          git config user.name "Amanda Frost"
+          git config user.email "amanda.amy.frost@gmail.com"
+          git add *.pdf
+          git commit -m "Update analysis notebook PDF" ||
+            echo "No changes to commit"
+          git push
