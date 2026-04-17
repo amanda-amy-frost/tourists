@@ -54,7 +54,7 @@ This project is an introductory exploration of a [tourist database](https://www.
 
 <details open>
 
-<summary><b>Click on the arrow below to expand and see the current charts</b></summary>
+<summary><b>Click on the arrow to expand or collapse the current charts</b></summary>
 
 ### Charts
 
