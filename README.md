@@ -82,7 +82,7 @@ This project is an introductory exploration of a [tourist database](https://www.
 
 </details>
 
-### Preliminary findings
+### Preliminary findings (draft)
 
 - 2005
 - Regional trends
@@ -90,7 +90,7 @@ This project is an introductory exploration of a [tourist database](https://www.
 - Iceland
 - Potential promise for climate change hypothesis?
 
-### Research questions
+### Research questions (draft)
 
 - How do tourist visits correlate with the working and retired populations of each country?
 - How do they correlate with climate - using a proxy measure of 30+ degree days?
@@ -101,9 +101,11 @@ This project is an introductory exploration of a [tourist database](https://www.
 - Hot days
 - Regional trends
 
+<!--
 ### Potential statistical approach
 
 Curve fitting, regressions, hypothesis testing
+-->
 
 ## Technical decisions
 
