@@ -15,18 +15,21 @@
   - [Choice of dataframe library](#choice-of-dataframe-library)
   - [Development process](#development-process)
   - [Statistics packages to consider](#statistics-packages-to-consider)
-  - [Local prerequisites](#local-prerequisites)
-  - [Development environment](#development-environment)
-  - [Interesting tools for the future](#interesting-tools-for-the-future)
 - [Scope and granularity of data](#scope-and-granularity-of-data)
 - [Data sources](#data-sources)
 
 
 ## Executive summary
 
-TODO: Answer the question for why I'm focusing so much on the tech explanations and less on other things.
+<!--
+TODO:Answer the question for why I'm focusing so much on the tech explanations and less on other things.
+-->
 
-**Read the full report [here](), with an executive summary in Danish and commentary and analysis in Danish and English.**
+**This is still in the draft phase as of April 17.**
+
+**Read the current report [here](Analysis.pdf) in PDF format or [here](./scripts/analysis.ipynb) in notebook format, with commentary and analysis in Danish and English.**
+
+**Or see the entire [repository](https://github.com/amanda-amy-frost/tourists).**
 
 This project is an introductory exploration of a [tourist database](https://www.statistikbanken.dk/TURIST) that tracks overnight stays in Denmark by nationality, time period, country region, and other categories. The goal of this project is to gain a sufficient overview of this area, find insights, propose and test hypotheses, visualize and analyze results, and draw useful conclusions.
 
@@ -38,14 +41,18 @@ This project is an introductory exploration of a [tourist database](https://www.
 - :ballot_box_with_check: Data normalization
 - :ballot_box_with_check: Initial visualization
 - :ballot_box_with_check: Initial commentary
-- :ballot_box_with_check: Technical documentation
-- :ballot_box_with_check: Formulation of research questions
-- :ballot_box: (Optional) Marimo toy example
-- :ballot_box: (Optional) Notebook to PDF workflow
-- :ballot_box: Selection of statistical tools and methods
+- :ballot_box_with_check: (Optional) Notebook to PDF automation
+  - [Action repository](https://github.com/amanda-amy-frost/jupyter-to-pdf-action)
+- :ballot_box_with_check: (Optional) Marimo toy example
+  - [Interactive notebook app](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app)
+- :x: (Optional) Power BI dashboard
+  - Blocked from publishing due to Microsoft's focus on enterprise
+  - See [screenshot](./images/screenshots/power-bi.png) for initial experimentation
+- :yellow_square: Technical documentation (in progress)
+- :yellow_square: Formulation of research questions (in progress)
+- :yellow_square: Selection of statistical tools and methods (in pogress)
 - :ballot_box: Statistical analysis
 - :ballot_box: Final chart generation
-- :ballot_box: (Optional) Power BI dashboard
 - :ballot_box: Analysis write-up
 - :ballot_box: Conclusion write-up
 
@@ -57,23 +64,23 @@ This project is an introductory exploration of a [tourist database](https://www.
 
 #### "Big hitters"
 
-![Big hitters](./images/big_hitters.svg)
+![Big hitters](./images/svg/big_hitters.svg)
 
 #### Western EU
 
-![Western EU](./images/west_eu.svg)
+![Western EU](./images/svg/west_eu.svg)
 
 #### Nordics (excluding Denmark)
 
-![Nordics](./images/nordics.svg)
+![Nordics](./images/svg/nordics.svg)
 
 #### Southern EU
 
-![Southern EU](./images/south_eu.svg)
+![Southern EU](./images/svg/south_eu.svg)
 
 #### North America
 
-![North America](./images/nor_amer.svg)
+![North America](./images/svg/nor_amer.svg)
 
 </details>
 
@@ -130,6 +137,7 @@ I haven't yet needed to use these libraries so far, but for statistical analysis
 - [scikit-learn](https://scikit-learn.org/stable/)
   - [regressions](https://scikit-learn.org/stable/supervised_learning.html)
 
+<!--
 ### Local prerequisites
 
 - Jupyter notebook
@@ -159,6 +167,7 @@ Although outside the scope of this project and a secondary consideration...
 - uv
 - Prefect
 - WSL
+-->
 
 ## Scope and granularity of data
 
@@ -174,3 +183,5 @@ See the images folder for screenshots of how the data was selected from each sou
 - [Climate data](https://climateknowledgeportal.worldbank.org/download-data)
   - [Sample API call for Denmark](https://cckpapi.worldbank.org/api/v1/era5-x0.25_timeseries_hd30_timeseries_annual_1950-2023_mean_historical_era5_x0.25_mean/DNK?_format=json)
 - [Country populations (link goes to exact configuration)](https://data-explorer.oecd.org/vis?lc=en&df[ds]=DisseminateFinalDMZ&df[id]=DSD_POPULATION%40DF_POP_HIST&df[ag]=OECD.ELS.SAE&df[vs]=1.0&dq=FIN%2BISL%2BITA%2BNOR%2BPRT%2BSWE%2BAUT%2BFRA%2BDEU%2BIRL%2BNLD%2BESP%2BCHE%2BGBR%2BUSA%2BCAN%2BBEL..PS._T._T%2BY15T64%2BY_GE65.&pd=1992%2C2024&to[TIME_PERIOD]=false&vw=tb)
+  - [Old age dependency ratio](https://data-explorer.oecd.org/vis?lc=en&df[ds]=DisseminateFinalDMZ&df[id]=DSD_POPULATION%40DF_POP_HIST&df[ag]=OECD.ELS.SAE&df[vs]=1.0&dq=FIN%2BISL%2BITA%2BNOR%2BPRT%2BSWE%2BAUT%2BFRA%2BDEU%2BIRL%2BNLD%2BESP%2BCHE%2BGBR%2BUSA%2BCAN%2BBEL.DEPEND_RATIO_OLD.._T..&pd=1992%2C2024&to[TIME_PERIOD]=false&vw=tb)
+  - [Total dependency ratio](https://data-explorer.oecd.org/vis?lc=en&df[ds]=DisseminateFinalDMZ&df[id]=DSD_POPULATION%40DF_POP_HIST&df[ag]=OECD.ELS.SAE&df[vs]=1.0&dq=FIN%2BISL%2BITA%2BNOR%2BPRT%2BSWE%2BAUT%2BFRA%2BDEU%2BIRL%2BNLD%2BESP%2BCHE%2BGBR%2BUSA%2BCAN%2BBEL.DEPEND_RATIO.._T..&pd=1992%2C2024&to[TIME_PERIOD]=false&vw=tb)

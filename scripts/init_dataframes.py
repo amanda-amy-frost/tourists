@@ -8,6 +8,8 @@ import polars as pl
 pop = pl.read_csv('../data/population-processed.csv')
 climate = pl.read_csv('../data/climate-data.csv')
 tourists_pivoted = pl.read_csv('../data/tourists-processed.csv')
+old_dep = pl.read_csv('../data/population-old-dep-ratio-processed.csv')
+total_dep = pl.read_csv('../data/population-total-dep-ratio-processed.csv')
 
 # "Unpivot" the dataframe so that year repeats for each iso_code.
 # This operation is more intuitive if you start with a pivoted table,
@@ -61,7 +63,8 @@ COLUMN_ORDER = [
     'demo',
     'demo_total',
     'country_total',
-    'pop_percent',
+    'ratio_type',
+    'dep_percent',
 ]
 
 # Use explicit type hint for code completion
@@ -86,10 +89,6 @@ for iso_code in COUNTRY_ISO_CODES:
                 _pop_total_expr                 # Grab the TOTAL population (scalar) for
                     .over(['iso_code', 'year']) # that code+year combo, and fill the rows
                     .alias('country_total')     # of country_total for the same code+year
-            ).with_columns( # Need a second call, as country_total must first exist
-                (pl.col('demo_total') / pl.col('country_total') * 100)
-                    .round(2)
-                    .alias('pop_percent')
             ).sort(pl.col('year'))
     )
 
@@ -101,8 +100,11 @@ for iso_code in COUNTRY_ISO_CODES:
     # Joining on those two columns will automatically broadcast the appropriate rows.
     _tour = tourists.filter(pl.col('iso_code') == iso_code)
     _clim = climate.filter(pl.col('iso_code') == iso_code)
+    _old_dep = old_dep.filter(pl.col('iso_code') == iso_code)
+    # _total_dep = total_dep.filter(pl.col('iso_code') == iso_code)
     _full_df = (
         _tour.join(_clim, on=['iso_code', 'year'], how='left', validate='1:1')
+            .join(_old_dep, on=['iso_code', 'year'], how='left', validate='1:1')
             .join(_pop_with_stats, on=['iso_code', 'year'], how='left', validate='1:m')
     )
     # The one null value we want to fill is the missing 'country' for 2025.
@@ -111,7 +113,12 @@ for iso_code in COUNTRY_ISO_CODES:
         'country',
         _full_df.select(pl.col('country').fill_null(strategy='forward'))
     )
+    _fixed_ratio_type = pl.Series(
+        'ratio_type',
+        _full_df.select(pl.col('ratio_type').fill_null(strategy='forward'))
+    )
     _full_df.replace_column(_full_df.get_column_index('country'), _fixed_countries)
+    _full_df.replace_column(_full_df.get_column_index('ratio_type'), _fixed_ratio_type)
     _full_df = _full_df.select(COLUMN_ORDER)
 
     # I am willfully choosing the duplication here for the reasons described above

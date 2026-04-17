@@ -12,11 +12,49 @@ POPULATION_COLS = [
     ('OBS_VALUE', 'demo_total'),
 ]
 
+DEPENDENCY_COLS = [
+    ('REF_AREA', 'iso_code'),
+    ('Reference area', 'country'),
+    ('MEASURE', 'ratio_type'),
+    ('AGE', 'age'),
+    ('TIME_PERIOD', 'year'),
+    ('OBS_VALUE', 'dep_percent'),
+]
+
+DEPENDENCY_ORDER = [
+    'iso_code',
+    'country',
+    'year',
+    'ratio_type',
+    'age',
+    'dep_percent',
+]
+
 pop = pl.read_csv(
     source='../data/population-raw.csv',
     columns=[col[0] for col in POPULATION_COLS],
     new_columns=[col[1] for col in POPULATION_COLS],
     schema_overrides={'OBS_VALUE': pl.Float64}, # Avoid parsing errors
+)
+
+old_dep = pl.read_csv(
+    source='../data/population-old-dep-ratio-raw.csv',
+    columns=[col[0] for col in DEPENDENCY_COLS],
+    new_columns=[col[1] for col in DEPENDENCY_COLS],
+).select(
+    DEPENDENCY_ORDER
+).write_csv(
+    '../data/population-old-dep-ratio-processed.csv'
+)
+
+total_dep = pl.read_csv(
+    source='../data/population-total-dep-ratio-raw.csv',
+    columns=[col[0] for col in DEPENDENCY_COLS],
+    new_columns=[col[1] for col in DEPENDENCY_COLS],
+).select(
+    DEPENDENCY_ORDER
+).write_csv(
+    '../data/population-total-dep-ratio-processed.csv'
 )
 
 # In the rows for Portugal, the population numbers have a few non-whole number entries.
