@@ -27,9 +27,7 @@ TODO:Answer the question for why I'm focusing so much on the tech explanations a
 
 **This is still in the draft phase as of April 17.**
 
-**Read the current report [here](DataAnalysis.pdf) in PDF format or [here](./scripts/DataAnalysis.ipynb) in notebook format, with commentary and analysis in Danish and English.**
-
-**Or see the entire [repository](https://github.com/amanda-amy-frost/tourists).**
+**Read the current report [here](./scripts/DataAnalysis.ipynb), with commentary and analysis in Danish and English.**
 
 This project is an introductory exploration of a [tourist database](https://www.statistikbanken.dk/TURIST) that tracks overnight stays in Denmark by nationality, time period, country region, and other categories. The goal of this project is to gain a sufficient overview of this area, find insights, propose and test hypotheses, visualize and analyze results, and draw useful conclusions.
 
