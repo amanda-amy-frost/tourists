@@ -8,16 +8,14 @@
     - [Nordics (excluding Denmark)](#nordics-excluding-denmark)
     - [Southern EU](#southern-eu)
     - [North America](#north-america)
-  - [Preliminary findings](#preliminary-findings)
-  - [Research questions](#research-questions)
-  - [Potential statistical approach](#potential-statistical-approach)
 - [Technical decisions](#technical-decisions)
   - [Choice of dataframe library](#choice-of-dataframe-library)
   - [Development process](#development-process)
   - [Statistics packages to consider](#statistics-packages-to-consider)
+  - [Preliminary findings (draft)](#preliminary-findings-draft)
+  - [Research questions (draft)](#research-questions-draft)
 - [Scope and granularity of data](#scope-and-granularity-of-data)
 - [Data sources](#data-sources)
-
 
 ## Executive summary
 
@@ -25,9 +23,9 @@
 TODO:Answer the question for why I'm focusing so much on the tech explanations and less on other things.
 -->
 
-**This is still in the draft phase as of April 17.**
+**This project is still in the draft phase as of April 17.**
 
-**Read the current report [here](./scripts/DataAnalysis.ipynb), with commentary and analysis in Danish and English.**
+**Read the current report as a [notebook](./scripts/DataAnalysis.ipynb) or as a [PDF](DataAnalysis.pdf), with commentary and analysis in Danish and English.**
 
 This project is an introductory exploration of a [tourist database](https://www.statistikbanken.dk/TURIST) that tracks overnight stays in Denmark by nationality, time period, country region, and other categories. The goal of this project is to gain a sufficient overview of this area, find insights, propose and test hypotheses, visualize and analyze results, and draw useful conclusions.
 
@@ -81,25 +79,6 @@ This project is an introductory exploration of a [tourist database](https://www.
 ![North America](./images/svg/nor_amer.svg)
 
 </details>
-
-### Preliminary findings (draft)
-
-- 2005
-- Regional trends
-- UK not affected?
-- Iceland
-- Potential promise for climate change hypothesis?
-
-### Research questions (draft)
-
-- How do tourist visits correlate with the working and retired populations of each country?
-- How do they correlate with climate - using a proxy measure of 30+ degree days?
-- Are there any interesting tourist trends within the Nordic countries?
-- Has Brexit affected tourism from the UK long-term?
-- How impactful was COVID on tourism?
-- Dependency ratio
-- Hot days
-- Regional trends
 
 <!--
 ### Potential statistical approach
@@ -168,6 +147,25 @@ Although outside the scope of this project and a secondary consideration...
 - Prefect
 - WSL
 -->
+
+### Preliminary findings (draft)
+
+- 2005
+- Regional trends
+- UK not affected?
+- Iceland
+- Potential promise for climate change hypothesis?
+
+### Research questions (draft)
+
+- How do tourist visits correlate with the working and retired populations of each country?
+- How do they correlate with climate - using a proxy measure of 30+ degree days?
+- Are there any interesting tourist trends within the Nordic countries?
+- Has Brexit affected tourism from the UK long-term?
+- How impactful was COVID on tourism?
+- Dependency ratio
+- Hot days
+- Regional trends
 
 ## Scope and granularity of data
 
