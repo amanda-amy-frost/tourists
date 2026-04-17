@@ -27,7 +27,7 @@ TODO:Answer the question for why I'm focusing so much on the tech explanations a
 
 **This is still in the draft phase as of April 17.**
 
-**Read the current report [here](Analysis.pdf) in PDF format or [here](./scripts/analysis.ipynb) in notebook format, with commentary and analysis in Danish and English.**
+**Read the current report [here](DataAnalysis.pdf) in PDF format or [here](./scripts/DataAnalysis.ipynb) in notebook format, with commentary and analysis in Danish and English.**
 
 **Or see the entire [repository](https://github.com/amanda-amy-frost/tourists).**
 
