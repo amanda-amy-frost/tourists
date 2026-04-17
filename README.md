@@ -52,7 +52,7 @@ This project is an introductory exploration of a [tourist database](https://www.
 - :ballot_box: Analysis write-up
 - :ballot_box: Conclusion write-up
 
-<details>
+<details open>
 
 <summary><b>Click on the arrow below to expand and see the current charts</b></summary>
 
