@@ -54,7 +54,7 @@ This project is an introductory exploration of a [tourist database](https://www.
 
 <details open>
 
-<summary><b>Click on the arrow to expand or collapse the current charts</b></summary>
+<summary><b>Click to expand or collapse the current charts</b></summary>
 
 ### Charts
 
@@ -148,9 +148,24 @@ Although outside the scope of this project and a secondary consideration...
 - WSL
 -->
 
-### Preliminary findings (draft)
+### Preliminary findings
 
-- 2005
+**NB:** I use "visits" to refer to overnight stays for brevity, and "visitors" also signifies people within this set.
+
+#### Outliers in earlier years of tourist data
+
+While the tourist data goes back to 1992, some countries such as Iceland, Portugal, and Ireland were clear outliers until the early 2000s due to how few people visited Denmark at the time. I decided to exclude these years entirely to avoid skewing the data for those countries and peforming an incorrect analysis. For completeness visualization purposes, those years are still included in the [interactive app](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app).
+
+To first find which year to start at though, I needed some process to exlucde the outliers. My process for doing this was a bit loose. I wanted to use the standard deviation in some way as my primary indicator for the variability of the data. There are also metrics such as the coefficient of variation, but I wanted to be brutal and straightforward and just find some reasonable start year without considering which metric would best apply here.
+
+I decided that I would do the following: I wanted to find a constant to multiply the standard deviation with such that the first year ("starting year") of the filtered dataset would be the year where all countries had visits that were *at minimum* that value below the mean *or above*. In other words:
+
+$y : \forall c \in C \; v_c \geq \mu(v_c) - x\sigma(v_c)$
+
+Where $y$ is the "starting year", $c$ is a country from the set of $C$ countries in my dataset, $v_c$ is visits for that country (in that year), $\mu$ is the mean, $\sigma$ is the standard deviation, and $x$ is what I want to find for my dataset to look reasonable.
+
+I ended up settling on a value of 1.2 for $x$, and the starting year ended up being 2005. In other words, every country's visits from that year onwards - excluding potentially the COVID years - was *no more than* 1.2 standard deviations below the mean.
+
 - Regional trends
 - UK not affected?
 - Iceland
