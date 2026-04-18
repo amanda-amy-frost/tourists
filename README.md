@@ -43,7 +43,7 @@ The limiting starting year for the data is the tourist dataset, which extends ba
 
 <details>
 
-<summary>Show or hide list of countries</summary>
+<summary><b>Show or hide list of countries</b></summary>
 
 - Austria
 - Belgium
@@ -137,7 +137,7 @@ Curve fitting, regressions, hypothesis testing
 
 <details open>
 
-<summary>Show or hide section</summary>
+<summary><b>Show or hide section</b></summary>
 
 **NB:** I use "visits" to refer to overnight stays for brevity, and "visitors" also signifies people within this set.
 
