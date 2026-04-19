@@ -135,6 +135,8 @@ Curve fitting, regressions, hypothesis testing
 
 ### Preliminary findings
 
+<!--TODO reason for choosing hot days as proxy climate measure-->
+
 <details open>
 
 <summary><b>Show or hide section</b></summary>
