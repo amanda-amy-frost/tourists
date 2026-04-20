@@ -2,7 +2,7 @@
 # Tourist data mini-project (2026)
 
 - [Introduction](#introduction)
-- [Interactive Dashboard](#interactive-dashboard)
+- [Interactive dashboard](#interactive-dashboard)
 - [Current progress](#current-progress)
 - [Charts](#charts)
   - [Regional visits scaled by population](#regional-visits-scaled-by-population)
@@ -59,7 +59,7 @@ The limiting starting year for the data is the tourist dataset, which extends ba
 
 </details>
 
-## Interactive Dashboard
+## Interactive dashboard
 
 [Go to dashboard](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app)
 
