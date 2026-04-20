@@ -5,15 +5,13 @@
 - [Interactive Dashboard](#interactive-dashboard)
   - [Current progress](#current-progress)
   - [Charts](#charts)
-    - ["Big hitters"](#big-hitters)
-    - [Western EU](#western-eu)
-    - [Nordics (excluding Denmark)](#nordics-excluding-denmark)
-    - [Southern EU](#southern-eu)
-    - [North America](#north-america)
-  - [Preliminary findings](#preliminary-findings)
+    - [Regional vistis scaled by population](#regional-vistis-scaled-by-population)
+    - [Preliminary findings](#preliminary-findings)
+  - [Preliminary findings](#preliminary-findings-1)
     - [Regional groupings](#regional-groupings)
     - [Outliers in earlier years of tourist data](#outliers-in-earlier-years-of-tourist-data)
     - [Preliminary regional trends](#preliminary-regional-trends)
+    - [UK economic trends](#uk-economic-trends)
     - [Early indications of the role of climate change?](#early-indications-of-the-role-of-climate-change)
     - [Dependency ratio](#dependency-ratio)
   - [Research questions](#research-questions)
@@ -24,10 +22,6 @@
 - [Data sources](#data-sources)
 
 ## Introduction
-
-<!--
-TODO:Answer the question for why I'm focusing so much on the tech explanations and less on other things.
--->
 
 **This project is still under active development and is subject to frequent changes.**
 
@@ -69,7 +63,7 @@ The limiting starting year for the data is the tourist dataset, which extends ba
 
 [Go to dashboard](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app)
 
-The dashboard is currently being expanded with new functionality.
+The dashboard my be expanded in the future with additional functionality, but it is feature complete for now.
 
 ![Tourism dashboard](./images/screenshots/tourism-dashboard.png)
 
@@ -85,13 +79,14 @@ The dashboard is currently being expanded with new functionality.
   - [Action repository](https://github.com/amanda-amy-frost/jupyter-to-pdf-action)
 - :ballot_box_with_check: (Optional) Marimo toy example
   - [Interactive dashboard](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app)
+  - [GitHub repository](https://github.com/amanda-amy-frost/tourists-dashboard)
 - :x: (Optional) Power BI dashboard
   - Blocked from publishing due to Microsoft's account [requirements](https://learn.microsoft.com/en-us/power-bi/collaborate-share/service-publish-to-web#prerequisites) (i.e. work email)
   - See [screenshot](./images/screenshots/power-bi.png) for initial experimentation
 - :ballot_box_with_check: Preliminary findings
 - :ballot_box_with_check: Formulate research questions
 - :pause_button: Technical documentation (see [notebook](./scripts/DataAnalysis.ipynb))
-- :yellow_square: Expand dashboard functionality
+- :ballot_box_with_check: Expand dashboard functionality
 - :ballot_box: Select statistical tools and methods
 - :ballot_box: Statistical analysis
 - :ballot_box: Final chart generation
@@ -99,31 +94,53 @@ The dashboard is currently being expanded with new functionality.
 - :ballot_box: Conclusion write-up
 - :ballot_box: Fix PDF automation bug
 
-<details open>
-
-<summary><b>Click to show or hide the current graphs</b></summary>
-
 ### Charts
 
-#### "Big hitters"
+#### Regional vistis scaled by population
+
+<details>
+
+<summary><b>Click to show or hide</b></summary>
+
+**"Big hitters"**
 
 ![Big hitters](./images/svg/big_hitters.svg)
 
-#### Western EU
+**Western EU**
 
 ![Western EU](./images/svg/west_eu.svg)
 
-#### Nordics (excluding Denmark)
+**Nordics (excluding Denmark)**
 
 ![Nordics](./images/svg/nordics.svg)
 
-#### Southern EU
+**Southern EU**
 
 ![Southern EU](./images/svg/south_eu.svg)
 
-#### North America
+**North America**
 
 ![North America](./images/svg/nor_amer.svg)
+
+</details>
+
+#### Preliminary findings
+
+<details>
+
+<summary><b>Click to show or hide</b></summary>
+
+**Financial crash (UK)**
+
+![UK financial crash](./images/svg/uk_financial_crash.svg)
+
+![Financial crash table](./images/tables/uk_financial_crash_table.png)
+
+**Additional impact of Brexit**
+
+![Brexit](./images/svg/uk_brexit.svg)
+
+![Brexit table](./images/tables/uk_brexit_table.png)
 
 </details>
 
@@ -157,17 +174,25 @@ The "big hitters" are so named because, by portion of the total population, both
 
 #### Outliers in earlier years of tourist data
 
-While the tourist data goes back to 1992, some countries such as Iceland, Portugal, and Ireland were clear outliers until the early 2000s due to how few people visited Denmark at the time. I decided to exclude these years entirely to avoid skewing the data for those countries and peforming an incorrect analysis. For completeness visualization purposes, those years are still included in the [interactive app](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app).
+While the tourist data goes back to 1992, some countries such as Iceland, Portugal, and Ireland were clear outliers until the early 2000s due to how few people visited Denmark at the time. I decided to exclude these years entirely (for all countries) to avoid skewing the data and peforming an incorrect analysis. For completeness and visualization purposes, those years are still included in the [interactive app](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app).
 
-To first find which year to start at though, I needed some process to exlucde the outliers. My process for doing this was a bit loose. I wanted to use the standard deviation in some way as my primary indicator for the variability of the data. There are also metrics such as the coefficient of variation, but I wanted to be brutal and straightforward and just find some reasonable start year without considering which metric would best apply here.
+To first find which year to start at though, I needed some process to exclude the outliers. My process for doing this was a bit loose. I wanted to use the standard deviation in some way as my primary indicator for the variability of the data. There are also metrics worthy of consideration, but I wanted to be straightforward and just find some reasonable start year without considering which metric would best apply here.
 
-I decided that I would do the following: I wanted to find a constant to multiply the standard deviation with such that the first year ("starting year") of the filtered dataset would be the year where all countries had visits that were *at minimum* that value below the mean *or above*. In other words:
+I decided to do the following: I wanted to find some constant to multiply the standard deviation with such that the first year ("starting year") of the filtered dataset would be the year where all countries had visits that were *at minimum* that value below the mean *or above*. In other words:
 
-$y : \forall c \in C \; v_c \geq \mu(v_c) - x\sigma(v_c)$
+$\exists x : \forall y \geq y_0 \, \forall c \in C \; v_{yc} \geq \mu(v_{yc}) - x\sigma(v_{yc})$
 
-Where $y$ is the "starting year", $c$ is a country from the set of countries $C$ in my dataset, $v_c$ is visits for that country (in that year), $\mu$ is the mean, $\sigma$ is the standard deviation, and $x$ is what I want to find for my dataset to look reasonable.
+Where $y_0$ is the "starting year", $c$ is a country from the set of countries $C$ in my dataset, $v_{yc}$ is visits from that country in that year, $\mu$ is the mean, $\sigma$ is the standard deviation, and $x$ is what I want to find for my dataset to look reasonable.
 
-I ended up settling on a value of 1.2 for $x$, and the starting year ended up being 2005. In other words, every country's visits from that year onwards - excluding potentially the COVID years - was *no more than* 1.2 standard deviations below the mean. A sanity check confirms that this year seems like a reasonable start, as Iceland is the final outlier in 2004, and its visits jump more than an order of magnitude from that year to the next.
+If your eyes glaze over at the sight of the above expression, then the simplified version is:
+
+$v \geq \mu(v) - x\sigma(v)$
+
+For every year and country starting at some base year.
+
+The one caveat is that this was an iterative process, where a new potential starting year was set as the foundation for the data, and the new standard deviation and mean would be taken for each country based on this new starting year. When the year stabilized - i.e. went through one full iteration without increasing - then I would choose that as the definitive starting year for the full dataset.
+
+In actuality, I played around with $x$ in order to find a reasonable $y_0$. I ended up settling on a value of 1.2 for $x$, which yielded a starting year of 2005. A sanity check confirms that this year seems like a reasonable start, as Iceland is the final outlier in 2004, and its visits jump more than an order of magnitude from that year to the next.
 
 #### Preliminary regional trends
 
@@ -175,7 +200,7 @@ Speaking of, Iceland is one of those interesting countries that is worth highlig
 
 <details>
 
-<summary><b>Show or hide Nordics graph</b></summary>
+<summary><b>Show or hide Nordics chart</b></summary>
 
 ![Nordics](./images/svg/nordics.svg)
 
@@ -183,38 +208,45 @@ Speaking of, Iceland is one of those interesting countries that is worth highlig
 
 To be able to see just how much that event affected Icelandic tourism in comparison to related countries was enlightening.
 
-<!--
+It is also interesting to see the overall decline in tourism from the rest of the Nordics in this data. I don't think I can give any particular insight at this point, but one hypothesis is that the culture, architecture, and variety of experiences and activities to explore is more homogenous between these countries. And if prices become more competitive over time, where for the same price or less you can travel to more "exotic" destinations like Italy (or anywhere else), then there is less likely to be a draw to Denmark from the rest of the Nordics.
 
-Not necessarily the case - take a second look first.
+In fact, in a different project it would be interesting to look at the spatiotemporal variation in flight ticket prices (or full travel packages) from different starting countries.
 
-Now, this stands in contrast to the UK, whose tourism I thought would have been more affected by Brexit, but there are no early indications of that. They did leave right when COVID hit, but there are no early signs of their tourism recovery having been affected after the socioeconomic consequences of COVID levelled off.
+#### UK economic trends
+
+For both the 2008 financial crash, as well as for Brexit, the UK seems to have been particularly (disproportionately) affected by these two events. The UK left the EU almost exactly when COVID hit, so there are clear visual indications of how UK tourism has been suppressed if one assumes that neighboring countries more or less suffered the same economic effects from COVID. That question is also interesting in itself, namely whether the tourist data can be used as a proxy to suggest which countries were more impacted by COVID.
+
+**UK financial crash**
 
 <details>
 
-<summary><b>Click to show or hide Western EU graph</b></summary>
+<summary><b>Show or hide graphs</b></summary>
 
-![Nordics](./images/svg/west_eu.svg)
+![UK financial crash](./images/svg/uk_financial_crash.svg)
+
+![Financial crash table](./images/tables/uk_financial_crash_table.png)
 
 </details>
 
-My hypothesis is that wealth disparity between different classes in the UK is more exaggerated that in Iceland...
-
--->
-
-It is also interesting to see the overall decline in tourism from the rest of the Nordics in this data. I don't think I can give any particular insight at this point, but one hypothesis is that the culture, architecture, and variety of experiences and activities to explore is more homogenous between these countries. And if prices become more competitive over time, where for the same price or less you can travel to more "exotic" destinations like Italy (or anywhere else), then there is less likely to be a draw to Denmark from the rest of the Nordics.
-
-In fact, in a different project it would be interesting to look at the geospatial variation in flight ticket prices (or full travel packages) from different starting countries.
-<!--
-Even if market forces play a role and adapt to fluxuations in demand, that doesn't eliminate the underlying intrinsically motivated change in demand - it just incentivizes it.
--->
-
-#### Early indications of the role of climate change?
-
-One hypothesis I wanted to test, to the point I decided to find some basic data on it, was whether the ever escalating effects of climate change could play a role in deciding who travels where. As Denmark lies more north and has at least a reputation for being a more tolerable climate during summer, one would expect that tourism would increase from warmer, more southern climates like in Italy and Spain. Indeed, this is what we see:
+**Brexit**
 
 <details>
 
-<summary><b>Show or hide Southern EU graph</b></summary>
+<summary><b>Show or hide graphs</b></summary>
+
+![Brexit](./images/svg/uk_brexit.svg)
+
+![Brexit table](./images/tables/uk_brexit_table.png)
+
+</details>
+
+#### Early indications of the role of climate change?
+
+One hypothesis I wanted to test, to the point I decided to find some basic data on it, was whether the ever escalating effects of climate change could play a role in deciding who travels where. As Denmark lies more north and has a reputation for being a more tolerable climate during summer, one would expect that tourism would increase from warmer, more southern climates like in Italy and Spain. Indeed, this is what we see:
+
+<details>
+
+<summary><b>Show or hide Southern EU charts</b></summary>
 
 ![Nordics](./images/svg/south_eu.svg)
 
@@ -228,16 +260,19 @@ The dependency ratio of a country is measured by the portion of people too old o
 
 What I am interested in however is the elderly dependency ratio, or the ratio of retired people compared to the rest of the population. This is increasing in all countries in my dataset, but by different amounts. I am curious if there is a correlation between the ratio of elderly people in a country's population and how popular Denmark is as a tourist destination.
 
+However, the total dependency ratio could prove more useful comparatively, but that remains to be seen.
+
 </details>
 
 ### Research questions
 
-- How does tourism to Denmark correlate with the eldery dependency ratio?
-- Has Brexit meaningfully impacted UK tourism to Denmark compared to similar countries?
+- How does tourism to Denmark correlate with the eldery and total dependency ratios?
+- How much has Brexit meaningfully impacted UK tourism to Denmark compared to similar countries?
 - Does the warmth of a country's climate affect tourist visits to Denmark?
 - Just how impactful was COVID on overall tourism?
   - Are there still any long-term effects that can be seen? (E.g. Is the increasing demand from countries still suppressed compared to before COVID?)
   - What was the magnitude of the impact of COVID on tourism? In other words, how suppressed was tourism during the peak years of COVID?
+- Similarly, what insights can be gleamed about the 2008 financial crash based on the data?
 - Can I use the data I have to make predictions about the missing years from my climate and population datasets? And can those predictions be used as a measure for the accuracy of my predictions and underlying analysis?
 
 ## Technical decisions
