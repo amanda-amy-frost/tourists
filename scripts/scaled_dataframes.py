@@ -26,8 +26,10 @@ for iso_code in COUNTRY_ISO_CODES:
             .filter(pl.col('demo') == TOTAL)
             .select(
                 # Keep the country names so we can use them in graphs and plots
-                pl.col('iso_code', 'year', 'country'),
-                scaled=((pl.col('visits') / pl.col('demo_total')) * 100).round(4))
+                pl.col('iso_code', 'year', 'country', 'hot_days'),
+                scaled=((pl.col('visits') / pl.col('demo_total')) * 100).round(4),
+                old_dep_percent=pl.col('dep_percent'),
+            )
     )
     _scaled_by_pop.append(country)
 
