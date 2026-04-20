@@ -3,18 +3,18 @@
 
 - [Introduction](#introduction)
 - [Interactive Dashboard](#interactive-dashboard)
-  - [Current progress](#current-progress)
-  - [Charts](#charts)
-    - [Regional visits scaled by population](#regional-visits-scaled-by-population)
-    - [Preliminary findings](#preliminary-findings)
-  - [Preliminary findings](#preliminary-findings-1)
-    - [Regional groupings](#regional-groupings)
-    - [Outliers in earlier years of tourist data](#outliers-in-earlier-years-of-tourist-data)
-    - [Preliminary regional trends](#preliminary-regional-trends)
-    - [UK economic trends](#uk-economic-trends)
-    - [Early indications of the role of climate change?](#early-indications-of-the-role-of-climate-change)
-    - [Dependency ratio](#dependency-ratio)
-  - [Research questions](#research-questions)
+- [Current progress](#current-progress)
+- [Charts](#charts)
+  - [Regional visits scaled by population](#regional-visits-scaled-by-population)
+  - [Preliminary findings](#preliminary-findings)
+- [Preliminary findings](#preliminary-findings-1)
+  - [Regional groupings](#regional-groupings)
+  - [Outliers in earlier years of tourist data](#outliers-in-earlier-years-of-tourist-data)
+  - [Preliminary regional trends](#preliminary-regional-trends)
+  - [UK economic trends](#uk-economic-trends)
+  - [Early indications of the role of climate change?](#early-indications-of-the-role-of-climate-change)
+  - [Dependency ratio](#dependency-ratio)
+- [Research questions](#research-questions)
 - [Technical decisions](#technical-decisions)
   - [Choice of dataframe library](#choice-of-dataframe-library)
   - [Development process](#development-process)
@@ -67,7 +67,7 @@ The dashboard my be expanded in the future with additional functionality, but it
 
 ![Tourism dashboard](./images/screenshots/tourism-dashboard.png)
 
-### Current progress
+## Current progress
 
 - :ballot_box_with_check: Select relevant data
 - :ballot_box_with_check: Data extraction
@@ -94,9 +94,9 @@ The dashboard my be expanded in the future with additional functionality, but it
 - :ballot_box: Conclusion write-up
 - :ballot_box: Fix PDF automation bug
 
-### Charts
+## Charts
 
-#### Regional visits scaled by population
+### Regional visits scaled by population
 
 <details>
 
@@ -124,7 +124,7 @@ The dashboard my be expanded in the future with additional functionality, but it
 
 </details>
 
-#### Preliminary findings
+### Preliminary findings
 
 <details>
 
@@ -150,7 +150,7 @@ The dashboard my be expanded in the future with additional functionality, but it
 Curve fitting, regressions, hypothesis testing
 -->
 
-### Preliminary findings
+## Preliminary findings
 
 <!--TODO reason for choosing hot days as proxy climate measure-->
 
@@ -160,7 +160,7 @@ Curve fitting, regressions, hypothesis testing
 
 **NB: I use "visits" to refer to overnight stays for brevity, and "visitors" also signifies people within this set.**
 
-#### Regional groupings
+### Regional groupings
 
 I decided to group the 17 countries in my dataset into 5 regions:
 
@@ -172,7 +172,7 @@ I decided to group the 17 countries in my dataset into 5 regions:
 
 The "big hitters" are so named because, by portion of the total population, both countries far exceed the other western European countries and make visualization more difficult if they are grouped into the same region. The other groupings should hopefully make reasonable sense without further justification.
 
-#### Outliers in earlier years of tourist data
+### Outliers in earlier years of tourist data
 
 While the tourist data goes back to 1992, some countries such as Iceland, Portugal, and Ireland were clear outliers until the early 2000s due to how few people visited Denmark at the time. I decided to exclude these years entirely (for all countries) to avoid skewing the data and performing an incorrect analysis. For completeness and visualization purposes, those years are still included in the [interactive app](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app).
 
@@ -194,7 +194,7 @@ The one caveat is that this was an iterative process, where a new potential star
 
 In actuality, I played around with $x$ in order to find a reasonable $y_0$. I ended up settling on a value of 1.2 for $x$, which yielded a starting year of 2005. A sanity check confirms that this year seems like a reasonable start, as Iceland is the final outlier in 2004, and its visits jump more than an order of magnitude from that year to the next.
 
-#### Preliminary regional trends
+### Preliminary regional trends
 
 Speaking of, Iceland is one of those interesting countries that is worth highlighting, as I wanted to see if there were any economic trends I could infer from this data. The initial graphs I made charted the the overnight stays in proportion to the each country's population, and Iceland stands out as a country particularly impacted by the 2008 financial crash.
 
@@ -212,7 +212,7 @@ It is also interesting to see the overall decline in tourism from the rest of th
 
 In fact, in a different project it would be interesting to look at the spatiotemporal variation in flight ticket prices (or full travel packages) from different starting countries.
 
-#### UK economic trends
+### UK economic trends
 
 For both the 2008 financial crash, as well as for Brexit, the UK seems to have been particularly (disproportionately) affected by these two events. The UK left the EU almost exactly when COVID hit, so there are clear visual indications of how UK tourism has been suppressed if one assumes that neighboring countries more or less suffered the same economic effects from COVID. That question is also interesting in itself, namely whether the tourist data can be used as a proxy to suggest which countries were more impacted by COVID.
 
@@ -240,7 +240,7 @@ For both the 2008 financial crash, as well as for Brexit, the UK seems to have b
 
 </details>
 
-#### Early indications of the role of climate change?
+### Early indications of the role of climate change?
 
 One hypothesis I wanted to test, to the point I decided to find some basic data on it, was whether the ever escalating effects of climate change could play a role in deciding who travels where. As Denmark lies more north and has a reputation for being a more tolerable climate during summer, one would expect that tourism would increase from warmer, more southern climates like in Italy and Spain. Indeed, this is what we see:
 
@@ -254,7 +254,7 @@ One hypothesis I wanted to test, to the point I decided to find some basic data 
 
 While it would be nice to track the monthly or seasonal data to see if the summer months are where we comparatively see higher spikes from these countries, that is unfortunately outside the scope of this project. Regardless, I have the annual data for the number of days over 30 degrees (Celsius) for each country, and this can be used a proxy measure for seeing if there is a meaningful relationship between visits and the climate of each country.
 
-#### Dependency ratio
+### Dependency ratio
 
 The dependency ratio of a country is measured by the portion of people too old or too young to work compared to the working age population. For the [dataset](https://data-explorer.oecd.org/vis?lc=en&df[ds]=DisseminateFinalDMZ&df[id]=DSD_POPULATION%40DF_POP_HIST&df[ag]=OECD.ELS.SAE&df[vs]=1.0&dq=FIN%2BISL%2BITA%2BNOR%2BPRT%2BSWE%2BAUT%2BFRA%2BDEU%2BIRL%2BNLD%2BESP%2BCHE%2BGBR%2BUSA%2BCAN%2BBEL.DEPEND_RATIO.._T..&pd=1992%2C2024&to[TIME_PERIOD]=false&vw=tb) I used, the working age population was defined as being between 20 and 64 years old. For some countries in my dataset, this number increases by about 10 percentage points over the last 20 years. See Belgium, Finland, and France as examples. For others, this ratio either stays stable or even decreases. See Austria, Canada, and Norway as examples there.
 
@@ -264,7 +264,7 @@ However, the total dependency ratio could prove more useful comparatively, but t
 
 </details>
 
-### Research questions
+## Research questions
 
 - How does tourism to Denmark correlate with the elderly and total dependency ratios?
 - How much has Brexit meaningfully impacted UK tourism to Denmark compared to similar countries?
