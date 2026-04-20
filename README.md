@@ -5,7 +5,7 @@
 - [Interactive Dashboard](#interactive-dashboard)
   - [Current progress](#current-progress)
   - [Charts](#charts)
-    - [Regional vistis scaled by population](#regional-vistis-scaled-by-population)
+    - [Regional visits scaled by population](#regional-visits-scaled-by-population)
     - [Preliminary findings](#preliminary-findings)
   - [Preliminary findings](#preliminary-findings-1)
     - [Regional groupings](#regional-groupings)
@@ -96,7 +96,7 @@ The dashboard my be expanded in the future with additional functionality, but it
 
 ### Charts
 
-#### Regional vistis scaled by population
+#### Regional visits scaled by population
 
 <details>
 
@@ -174,7 +174,7 @@ The "big hitters" are so named because, by portion of the total population, both
 
 #### Outliers in earlier years of tourist data
 
-While the tourist data goes back to 1992, some countries such as Iceland, Portugal, and Ireland were clear outliers until the early 2000s due to how few people visited Denmark at the time. I decided to exclude these years entirely (for all countries) to avoid skewing the data and peforming an incorrect analysis. For completeness and visualization purposes, those years are still included in the [interactive app](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app).
+While the tourist data goes back to 1992, some countries such as Iceland, Portugal, and Ireland were clear outliers until the early 2000s due to how few people visited Denmark at the time. I decided to exclude these years entirely (for all countries) to avoid skewing the data and performing an incorrect analysis. For completeness and visualization purposes, those years are still included in the [interactive app](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app).
 
 To first find which year to start at though, I needed some process to exclude the outliers. My process for doing this was a bit loose. I wanted to use the standard deviation in some way as my primary indicator for the variability of the data. There are also metrics worthy of consideration, but I wanted to be straightforward and just find some reasonable start year without considering which metric would best apply here.
 
@@ -252,7 +252,7 @@ One hypothesis I wanted to test, to the point I decided to find some basic data 
 
 </details>
 
-While it would be nice to track the monthly or seaonal data to see if the summer months are where we comparatively see higher spikes from these countries, that is unfortunately outside the scope of this project. Regardless, I have the annual data for the number of days over 30 degrees (Celsius) for each country, and this can be used a proxy measure for seeing if there is a meaningful relationship between visits and the climate of each country.
+While it would be nice to track the monthly or seasonal data to see if the summer months are where we comparatively see higher spikes from these countries, that is unfortunately outside the scope of this project. Regardless, I have the annual data for the number of days over 30 degrees (Celsius) for each country, and this can be used a proxy measure for seeing if there is a meaningful relationship between visits and the climate of each country.
 
 #### Dependency ratio
 
@@ -266,7 +266,7 @@ However, the total dependency ratio could prove more useful comparatively, but t
 
 ### Research questions
 
-- How does tourism to Denmark correlate with the eldery and total dependency ratios?
+- How does tourism to Denmark correlate with the elderly and total dependency ratios?
 - How much has Brexit meaningfully impacted UK tourism to Denmark compared to similar countries?
 - Does the warmth of a country's climate affect tourist visits to Denmark?
 - Just how impactful was COVID on overall tourism?
@@ -281,7 +281,7 @@ However, the total dependency ratio could prove more useful comparatively, but t
 
 I was originally going to do this project with the classic [pandas](https://pandas.pydata.org/) + [matplotlib](https://matplotlib.org/) combo, but there have been some interesting developments over the last several years in the dataframe and data visualization space. The pandas API can be cumbersome and unintuitive, and libraries that accomplish similar goals have exploded in popularity recently, and for good reason.
 
-Among them is [Polars](https://docs.pola.rs/). It seems to be popular, standarized, and mature and feature complete enough to be a full replacement, and I found it extremely easy to start working with. So, I decided to instead learn enough of Polars to make this mini-project. The docs are excellent after all. And while the performance benefits are irrelevant for this project, this seems to be an all-round improvement on pandas by every possible measure, but especially the API.
+Among them is [Polars](https://docs.pola.rs/). It seems to be popular, standardized, and mature and feature complete enough to be a full replacement, and I found it extremely easy to start working with. So, I decided to instead learn enough of Polars to make this mini-project. The docs are excellent after all. And while the performance benefits are irrelevant for this project, this seems to be an all-round improvement on pandas by every possible measure, but especially the API.
 
 Polars also has native support for [Altair](https://altair-viz.github.io/index.html), so I used that library to render charts and plots.
 
@@ -290,7 +290,7 @@ TODO: Multiple ways of compatibility between Polars and pandas: functions, Narwh
 ### Development process
 
 - Prototype everything in [iPython](https://ipython.org/features/), one step at a time.
-- Once I have enough to acheive a particular goal, refactor and add the code to a script. Repeat for the next goal.
+- Once I have enough to achieve a particular goal, refactor and add the code to a script. Repeat for the next goal.
 - At the end, create a Jupyter notebook with the most important code and results, interspersed with text blocks that explain my thought process. Render that to a PDF as the final main artifact.
 
 ### Statistics packages to consider
