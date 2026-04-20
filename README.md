@@ -158,7 +158,7 @@ Curve fitting, regressions, hypothesis testing
 
 <summary><b>Show or hide section</b></summary>
 
-**NB:** I use "visits" to refer to overnight stays for brevity, and "visitors" also signifies people within this set.
+**NB: I use "visits" to refer to overnight stays for brevity, and "visitors" also signifies people within this set.**
 
 #### Regional groupings
 
