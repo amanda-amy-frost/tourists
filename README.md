@@ -178,7 +178,7 @@ The "big hitters" are so named because, by portion of the total population, both
 
 While the tourist data goes back to 1992, some countries such as Iceland, Portugal, and Ireland were clear outliers until the early 2000s due to how few people visited Denmark at the time. I decided to exclude these years entirely (for all countries) to avoid skewing the data and performing an incorrect analysis. For completeness and visualization purposes, those years are still included in the [interactive dsahboard](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app).
 
-To first find which year to start at though, I needed some process to exclude the outliers. My process for doing this was a bit loose. I wanted to use the standard deviation in some way as my primary indicator for the variability of the data. There are also metrics worthy of consideration, but I wanted to be straightforward and just find some reasonable start year without considering which metric would best apply here.
+To first find which year to start at though, I needed some process to exclude the outliers. My process for doing this was a bit loose. I wanted to use the standard deviation in some way as my primary indicator for the variability of the data. There are also other metrics worthy of consideration, but I wanted to be straightforward and just find some reasonable start year without considering which would best apply here.
 
 I decided to do the following: I wanted to find some constant to multiply the standard deviation with such that the first year ("starting year") of the filtered dataset would be the year where all countries had visits that were *at minimum* that value below the mean *or above*. In other words:
 
@@ -200,7 +200,7 @@ $\text{For }n = 0,1,2,... \text{ while } y_{n+1} \neq y_{n}$
 
 $y_{n+1} = \max_{y_n} F(y_n)$
 
-The standard deviation and mean would then be re-evaluated for each country by only considering data from the trial starting year and above. These would set the new bounds (above some constant $x$ multiple) for determining remaining outliers in the new iteration. When the year stabilized - i.e. went through one full iteration without increasing - then I would choose that as the definitive starting year for the full dataset.
+The standard deviation and mean would then be re-evaluated for each country by only considering data from the trial starting year and above. These would set the new boundary (above some constant $x$ multiple) for determining remaining outliers in the new iteration. When the year stabilized - i.e. went through one full iteration without increasing - then I would choose that as the definitive starting year for the full dataset.
 
 In actuality, I played around with $x$ in order to find a reasonable $y_0$. I ended up settling on a value of 1.2 for $x$, which yielded a starting year of 2005. A sanity check confirms that this year seems like a reasonable start, as Iceland is the final outlier in 2004, and its visits jump more than an order of magnitude from that year to the next.
 
