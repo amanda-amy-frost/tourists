@@ -61,7 +61,7 @@ The limiting starting year for the data is the tourist dataset, which extends ba
 
 ## Interactive dashboard
 
-[Go to dashboard](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app)
+[Go to dashboard](https://amandafrost.eu/dashboard/)
 
 The dashboard my be expanded in the future with additional functionality, but it is feature complete for now.
 
@@ -78,7 +78,7 @@ The dashboard my be expanded in the future with additional functionality, but it
 - :ballot_box_with_check: (Optional) Notebook to PDF automation
   - [Action repository](https://github.com/amanda-amy-frost/jupyter-to-pdf-action)
 - :ballot_box_with_check: (Optional) Marimo toy example
-  - [Interactive dashboard](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app)
+  - [Interactive dashboard](https://amandafrost.eu/dashboard/)
   - [GitHub repository](https://github.com/amanda-amy-frost/tourists-dashboard)
 - :x: (Optional) Power BI dashboard
   - Blocked from publishing due to Microsoft's account [requirements](https://learn.microsoft.com/en-us/power-bi/collaborate-share/service-publish-to-web#prerequisites) (i.e. work email)
@@ -176,7 +176,7 @@ The "big hitters" are so named because, by portion of the total population, both
 
 ### Outliers in earlier years of tourist data
 
-While the tourist data goes back to 1992, some countries such as Iceland, Portugal, and Ireland were clear outliers until the early 2000s due to how few people visited Denmark at the time. I decided to exclude these years entirely (for all countries) to avoid skewing the data and performing an incorrect analysis. For completeness and visualization purposes, those years are still included in the [interactive dashboard](https://molab.marimo.io/notebooks/nb_SuhkMpUkmvbTHzRQd2rt21/app).
+While the tourist data goes back to 1992, some countries such as Iceland, Portugal, and Ireland were clear outliers until the early 2000s due to how few people visited Denmark at the time. I decided to exclude these years entirely (for all countries) to avoid skewing the data and performing an incorrect analysis. For completeness and visualization purposes, those years are still included in the [interactive dashboard](https://amandafrost.eu/dashboard/).
 
 To first find which year to start at though, I needed some process to exclude the outliers. My process for doing this was a bit loose. I wanted to use the standard deviation in some way as my primary indicator for the variability of the data. There are also other metrics worthy of consideration, but I wanted to be straightforward and just find some reasonable start year without considering which would best apply here.
 
