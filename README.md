@@ -27,7 +27,7 @@
 
 **Read the current report as a [notebook](./scripts/DataAnalysis.ipynb) or as a [PDF](DataAnalysis.pdf), with commentary and analysis in Danish and English.**
 
-This project is an introductory exploration of a [tourist database](https://www.statistikbanken.dk/TURIST) that tracks overnight stays in Denmark by nationality, time period, country region, and other categories. The goal of this project is to gain a sufficient overview of this data, find insights, propose and test hypotheses, visualize and analyze results, and draw useful conclusions.
+This project is an introductory exploration of a [tourist database](https://www.statistikbanken.dk/TURIST) that tracks overnight stays in Denmark by nationality, time period, region in the country, and other categories. The goal of this project is to gain a sufficient overview of this data, find insights, propose and test hypotheses, visualize and analyze results, and draw useful conclusions.
 
 The scope is limited to annualized data for a representative sample of Global North countries. Besides the tourist data extract (current through 2025), there is also annual population data for each country via the [OECD](https://data-explorer.oecd.org/vis?lc=en&df[ds]=DisseminateFinalDMZ&df[id]=DSD_POPULATION%40DF_POP_HIST&df[ag]=OECD.ELS.SAE&df[vs]=1.0&dq=FIN%2BISL%2BITA%2BNOR%2BPRT%2BSWE%2BAUT%2BFRA%2BDEU%2BIRL%2BNLD%2BESP%2BCHE%2BGBR%2BUSA%2BCAN%2BBEL..PS._T._T%2BY15T64%2BY_GE65.&pd=1992%2C2024&to[TIME_PERIOD]=false&vw=tb) (current through 2024) and annualized climate proxy data (number of days over 30 degrees Celsius) from the [ERA5](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview) dataset (current through 2023).
 
